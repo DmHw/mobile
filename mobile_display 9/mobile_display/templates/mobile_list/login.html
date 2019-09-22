@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>login</title>
+    <meta name="description" content="particles.js is a lightweight JavaScript library for creating particles.">
+    <meta name="author" content="Vincent Garreau" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" media="screen" href="../../static/css/login.css">
+    <script src="/static/js/jquery-1.12.4.min.js"></script>
+    <script>
+       $(function () {
+           $('#btnLogin').click(function () {
+               userName=$('#userName').val()
+               passWord=$('#passWord').val()
+
+               $.ajax({
+                   'url':'/login_ajax_check',
+                   'type':'post',
+                   'data':{'userName':userName, 'passWord':passWord},
+                   'dataType':'json',
+               }).success(function (data) {
+                   if (data.res == 0){
+                       $('#errmsg').show().html('用户名或密码错误!')
+
+                   }
+                   else {
+                       location.href='/index'
+                   }
+
+               })
+
+
+           })
+
+
+       })
+    </script>
+    <style>
+        #errmsg{
+            display: none;
+            color: red;
+
+        }
+        #main-title{
+        position: relative;
+            margin-top: 60px;
+           text-align: center;
+        font-size:60px;
+        color: #5790e9;
+        font-family: 楷体;
+}
+        input::-webkit-input-placeholder{
+            color: white;
+            font-size: 14px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <!-- particles.js container -->
+    <div id="particles-js" style="display: flex;align-items: center;justify-content: center">
+    </div>
+
+    <div class="login-page">
+        <div id="main-title"  >
+    三大运营商业务可视化系统</div>
+
+
+        <div>
+            {% csrf_token %}
+            <div class="login-content" style="margin-top:-80px">
+                <div class="login-tit" >登录</div>
+                <div class="login-input">
+                    <input type="text" id="userName" placeholder="用户名" >
+                </div>
+                <div class="login-input">
+                    <input type="password" id="passWord" placeholder="密码" >
+                </div>
+                <div class="login-btn">
+                    <div class="login-btn-left">
+                       <input type="button" id="btnLogin" value="登录" style="width:100px;height:40px;color:white;
+                       font-size: 14px;
+                       background-color:transparent;border:1;border-radius:15px;cursor:pointer">
+                    </div>
+
+
+
+
+                    <div class="login-btn-right" id="errmsg">
+
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+    <!-- scripts -->
+    <script src="../../static/js/particles.js"></script>
+    <script src="../../static/js/app.js"></script>
+    <script>
+        function changeImg() {
+            let pic = document.getElementById('picture');
+            console.log(pic.src)
+            if (pic.getAttribute("src", 2) == "img/check.png") {
+                pic.src = "img/checked.png"
+            } else {
+                pic.src = "img/check.png"
+            }
+        }
+    </script>
+</body>
+</html>
